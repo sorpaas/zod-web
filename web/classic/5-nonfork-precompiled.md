@@ -107,3 +107,6 @@ working at ETC Dev Team. You can access this blog
 at
 [https://zod.that.world/classic](https://zod.that.world/classic)
 or in [Solri](https://zod.that.world/giveaway)'s **~zod** galaxy.
+
+*You can suggest changes at
+[Github](https://github.com/sorpaas/zod-web/blob/master/web/classic/5-nonfork-precompiled.md).*

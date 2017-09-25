@@ -97,3 +97,8 @@ working at ETC Dev Team. You can access this blog
 at
 [https://zod.that.world/classic](https://zod.that.world/classic)
 or in [Solri](https://zod.that.world/giveaway)'s **~zod** galaxy.
+
+*You can suggest changes at
+[Github](https://github.com/sorpaas/zod-web/blob/master/web/classic/7-reduced-gasprice.md)
+or in this [public Google
+Docs](https://docs.google.com/document/d/19uyewUxhYiL60ft9T_N9DQdYiJBFBpxFo5_dFsftbYs/edit?usp=sharing).*
