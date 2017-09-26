@@ -10,17 +10,17 @@ comments: true
 
 A common question raised from [On Adding Precompiled Contracts without
 Hard Forks](/classic/5-nonfork-precompiled/) is if a transaction
-indicated gas price reduction, how the client can make sure that it is
-safe to execute and the gas price reduction is valid. Incorrectly
-handle this might result in DDoS attacks in the network -- it is
-flooded with invalid gas price reduction transactions and clients are
-so busy to spend time to check whether they are valid.
+indicated gas price reduction, how can the client make sure that it is
+safe to execute and that the gas price reduction is valid. Incorrectly
+handling this might result in DDoS attacks in the network -- whereby it would be
+flooded with invalid gas price reduction transactions, rendering clients too
+busy to spend the time to check whether they are, in fact, valid.
 
 EVM is turing complete, so instead of validating directly on the
 client, we can delegate the resposibility to the transaction
-signer. In the networking layer, make it so that when a transaction
+signer. In the networking layer, this makes it so that when a transaction
 with gas price reduction is broadcasted, it will also need to
-broadcast a suppliment information called gas price reduction proof.
+broadcast a supplimental piece of information in the form of a gas price reduction proof.
 
 ## The Proof
 
@@ -32,16 +32,16 @@ locations. Each call stack, specifically, is represented as:
 ```
 
 The last item of the call stack must be a `CALL` to a non-HF
-precompiled contract. The client then simply follow this list of proof
-to check that non-HF precompiled contract must have been called for
-**at least** N times to componsate for its gas price reduction. This
+precompiled contract. The client then simply follows this list of proof
+to check that a non-HF precompiled contract must have been called for
+**at least** N times to compensate for its gas price reduction. This
 check is done in linear time.
 
-The client first go to the code location (if it is a message call
+The client first goes to the code location (if it is a message call
 transaction, then the code is from the `to` address of the
-transaction, if it is a contract creation transaction, then the code
+transaction, and if it is a contract creation transaction, then the code
 is from the `data` field of the transaction) of the first item in the
-call stack, checks it is a **static** call represented by the sequence
+call stack, and checks that it is a **static** call represented by the sequence
 below:
 
 ```
@@ -50,25 +50,25 @@ SWAP1
 CALL
 ```
 
-The client then follows `<contract address>` and then check the second
+The client then follows `<contract address>` and checks the second
 item in the call stack. For the last item, it checks whether the
 `<contract address>` is in a known list of non-HF precompiled
-contract.
+contracts.
 
 ## The Networking Layer
 
-Instead of boardcasting the transaction with gas price reduction using
+Instead of broadcasting the transaction with gas price reduction using
 the `Transactions` message in the [Ethereum
-sub-protocol](https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol). We
+sub-protocol](https://github.com/ethereum/wiki/wiki/Ethereum-Wire-Protocol), we
 define a new message `PriceReducedTransactions` message with the
-following format.
+following format:
 
 ```
 [+0x0n: P, [[nonce: P, receivingAddress: B_20, ...], [[callStackItem: P, ...], ...]], ...]
 ```
 
 That is, each transaction is also supplied by a list of call stack
-proof to supply that the gas price reduction is valid.
+proofs to demonstrate that the gas price reduction is valid.
 
 A new protocol version will also need to be defined because now we
 have a new message.
@@ -86,7 +86,7 @@ R_gas * R_price = T_gas * N_price
 ```
 
 Where `T_gas` is the actual gas limit specified in the
-transaction. `R_gas` is the reduced gas. `R_price` is the reduced gas
+transaction, `R_gas` is the reduced gas, `R_price` is the reduced gas
 price, and `N_price` is the normal gas price.
 
 ## About Classic in Orbit
